@@ -10,11 +10,11 @@ export default function SignupPage() {
     };
 
     return (
-        <>
-            <Top>
+        <SignupContainer>
+            <Logo>
                 <h1>linkr</h1>
                 <p>save, share and discover <br />the best links on the web</p>
-            </Top>
+            </Logo>
             <FormContainer>
                 <form onSubmit={signup}>
                     <input
@@ -51,11 +51,17 @@ export default function SignupPage() {
                     </Link>
                 </form>
             </FormContainer>
-        </>
+        </SignupContainer>
     );
 };
 
-const Top = styled.div`
+const SignupContainer = styled.div`
+    @media (min-width: 1300px) {
+        display: flex;
+    }
+`
+
+const Logo = styled.div`
     background-color: #151515;
     height: 175px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -72,6 +78,24 @@ const Top = styled.div`
         font-family: 'Oswald', sans-serif;
         font-size: 23px;
         text-align: center;
+    }
+
+    @media (min-width: 1300px) {
+        width: 70%;
+        height: 100vh;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        padding-left: 200px;
+        h1{
+            margin-top: 300px;
+            font-size: 106px;
+            margin-bottom: 10px;
+        }
+        p{
+            font-size: 46px;
+        }
+        box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.25);
     }
 
 `
@@ -113,5 +137,12 @@ const FormContainer = styled.div`
         color: #FFFFFF;
         font-family: 'Lato', sans-serif;
         font-size: 17px;
+    }
+
+    @media (min-width: 1300px) {
+        width: 30%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 `
