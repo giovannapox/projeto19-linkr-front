@@ -1,12 +1,27 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function SignupPage() {
     const [user, setUser] = useState({ email: "", password: "", username: "", picture: "" });
+    const [disabled, setDisabled] = useState(false)
+    const navigate = useNavigate();
 
-    function signup() {
-
+    function signup(e) {
+        e.preventDefault();
+        setDisabled(true);
+        if(!user) return alert("Preencha todos os campos!");
+        const url = `http://localhost:5000/signup`;
+        const promise = axios.post(url, user);
+        promise.then(() => {
+            alert("Usuário cadastrado com sucesso!");
+            navigate("/");
+        });
+        promise.catch((err) => {
+            alert(err.response.data);
+            setDisabled(false);
+        });
     };
 
     return (
@@ -16,7 +31,7 @@ export default function SignupPage() {
                 <p>save, share and discover <br />the best links on the web</p>
             </Logo>
             <FormContainer>
-                <form onSubmit={signup}>
+                <form onSubmit={(e) => signup(e)}>
                     <input
                         placeholder="e-mail"
                         type="email"
@@ -45,7 +60,7 @@ export default function SignupPage() {
                         onChange={(e) => setUser({ ...user, picture: e.target.value })}
                         required
                     />
-                    <button type="submit">Sign Up</button>
+                    <button type="submit" disabled={disabled}>Sign Up</button>
                     <Link to="/">
                         Switch back to log in
                     </Link>
@@ -131,6 +146,9 @@ const FormContainer = styled.div`
         border-radius: 6px;
         border: none;
         font-size: 22px;
+        :disabled{
+        opacity: 0.7;
+        }
     }
     a{
         margin-top: 18px;
