@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function SignupPage() {
-    const [user, setUser] = useState({ email: "", password: "", username: "", picture: "" });
+    const [user, setUser] = useState({ email: "", password: "", name: "", pictureUrl: "" });
     const [disabled, setDisabled] = useState(false)
     const navigate = useNavigate();
 
@@ -49,15 +49,15 @@ export default function SignupPage() {
                     <input
                         placeholder="username"
                         type="text"
-                        value={user.username}
-                        onChange={(e) => setUser({ ...user, username: e.target.value })}
+                        value={user.name}
+                        onChange={(e) => setUser({ ...user, name: e.target.value })}
                         required
                     />
                     <input
                         placeholder="picture url"
                         type="url"
-                        value={user.picture}
-                        onChange={(e) => setUser({ ...user, picture: e.target.value })}
+                        value={user.pictureUrl}
+                        onChange={(e) => setUser({ ...user, pictureUrl: e.target.value })}
                         required
                     />
                     <button type="submit" disabled={disabled}>Sign Up</button>
