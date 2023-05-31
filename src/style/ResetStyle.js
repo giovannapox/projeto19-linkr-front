@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components"
+import { createGlobalStyle } from "styled-components";
 
 const ResetStyle = createGlobalStyle`
     html, body, div, span, applet, object, iframe,
@@ -28,6 +28,7 @@ const ResetStyle = createGlobalStyle`
 	}
 	body {
 		line-height: 1;
+		background-color: #333;
 	}
 	ol, ul {
 		list-style: none;
@@ -44,6 +45,9 @@ const ResetStyle = createGlobalStyle`
 		border-collapse: collapse;
 		border-spacing: 0;
 	}
-`
+	button:hover {
+		cursor: pointer;
+	}
+`;
 
 export default ResetStyle;
