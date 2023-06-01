@@ -6,6 +6,24 @@ import axios from "axios";
 export default function SearchBar() {
   const [searchResults, setSearchResults] = useState([]);
 
+  const handleSearch = async (event) => {
+    const searchTerm = event.target.value;
+
+    if (searchTerm.length < 3) {
+      setSearchResults([]);
+      return;
+    }
+
+    try {
+      const response = await axios.get(
+        `https://localhost:5000/user?search=${searchTerm}`
+      );
+      setSearchResults(response.data);
+    } catch (error) {
+      console.error("Failed to fetch search results", error);
+    }
+  };
+
   return (
     <SearchBarContainer>
       <StyledDebounceInput
