@@ -27,7 +27,6 @@ export default function SignupPage() {
     function signin(e) {
         e.preventDefault();
         setDisabled(true);
-
         if(!user) return alert("Preencha todos os campos!");
 
         const url = `http://localhost:5000/signin`;
