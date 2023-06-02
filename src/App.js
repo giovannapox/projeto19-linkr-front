@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { AuthProvider } from "./contexts/AuthContext.js";
 import SignupPage from "./pages/SignupPage";
 import SigninPage from "./pages/SigninPage";
 import Timeline from "./pages/Timeline";
@@ -6,6 +7,7 @@ import Timeline from "./pages/Timeline";
 export default function App() {
   return (
     <>
+      <AuthProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/signup" element={<SignupPage/> } />
@@ -13,6 +15,7 @@ export default function App() {
           <Route path="/timeline" element={<Timeline/>} />
         </Routes>
       </BrowserRouter>
+      </AuthProvider>
     </>
   );
 }
