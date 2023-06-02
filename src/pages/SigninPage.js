@@ -11,7 +11,6 @@ export default function SignupPage() {
     function signin (e){
         e.preventDefault();
         setDisabled(true);
-
         if(!user) return alert("Preencha todos os campos!");
 
         const url = `http://localhost:5000/signin`;
@@ -20,6 +19,8 @@ export default function SignupPage() {
             alert("Login realizado com sucesso!");
             const token = `Bearer ${res.data.token}`;
             localStorage.setItem("token", token);
+            localStorage.setItem("picture", res.data.picture);
+            console.log(res.data)
             navigate("/timeline");
         });
         promise.catch((err) => {
