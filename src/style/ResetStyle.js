@@ -48,6 +48,9 @@ const ResetStyle = createGlobalStyle`
 	button:hover {
 		cursor: pointer;
 	}
+	a {
+		text-decoration: none;
+	}
 `;
 
 export default ResetStyle;
