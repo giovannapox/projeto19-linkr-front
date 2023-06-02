@@ -59,6 +59,7 @@ const Container = styled.div`
   display: flex;
   gap: 18px;
   padding: 18px;
+  margin-bottom: 14px;
   border-radius: 16px;
   background-color: white;
   filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));

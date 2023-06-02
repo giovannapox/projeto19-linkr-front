@@ -1,14 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import useAuth from "../hooks/useAuth.js";
 
 export default function SignupPage() {
     const [user, setUser] = useState({ email: "", password: "" });
     const [disabled, setDisabled] = useState(false);
     const navigate = useNavigate();
-    
-    function signin (e){
+
+    const { auth, setAuth } = useAuth();
+
+    useEffect(() => {
+        if (auth) {
+            navigate("/timeline");
+        }
+
+        const storedAuth = localStorage.getItem("auth");
+
+        if (!auth && storedAuth) {
+            setAuth(JSON.parse(storedAuth));
+            navigate("/timeline");
+        }
+    }, [auth]);
+
+    function signin(e) {
         e.preventDefault();
         setDisabled(true);
         if(!user) return alert("Preencha todos os campos!");
@@ -16,11 +32,8 @@ export default function SignupPage() {
         const url = `http://localhost:5000/signin`;
         const promise = axios.post(url, user);
         promise.then((res) => {
-            alert("Login realizado com sucesso!");
-            const token = `Bearer ${res.data.token}`;
-            localStorage.setItem("token", token);
-            localStorage.setItem("picture", res.data.picture);
-            console.log(res.data)
+            localStorage.setItem("auth", JSON.stringify(res.data));
+            setAuth(res.data);
             navigate("/timeline");
         });
         promise.catch((err) => {

@@ -1,22 +1,22 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import useAuth from "../hooks/useAuth.js";
+import { useNavigate, useParams } from "react-router-dom";
 import PostsPageLayout from "../components/PostsPageLayout.js";
-import NewPostCard from "../components/NewPostCard.js";
 import PostCard from "../components/PostCard.js";
 import PostLoader from "../components/PostLoader.js";
+import useAuth from "../hooks/useAuth.js";
 
-export default function Timeline() {
-  const { auth } = useAuth();
+export default function Hashtag() {
   const navigate = useNavigate();
+  const { hashtag } = useParams();
   const [posts, setPosts] = useState([]);
+  const { auth } = useAuth();
 
   useEffect(() => {
-    if (!auth) return navigate("/");
+    if (!auth) navigate("/");
 
     axios
-      .get(`http://localhost:5000/posts`, {
+      .get(`http://localhost:5000/posts?hashtag=${hashtag}`, {
         headers: { Authorization: `Bearer ${auth.token}` },
       })
       .then((res) => setPosts(res.data))
@@ -29,8 +29,7 @@ export default function Timeline() {
   }, []);
 
   return (
-    <PostsPageLayout heading="timeline">
-      <NewPostCard />
+    <PostsPageLayout heading={`#${hashtag}`}>
       {posts.length !== 0 ? (
         posts.map((post) => <PostCard key={post.id} post={post} />)
       ) : (
