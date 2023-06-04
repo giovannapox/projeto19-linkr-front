@@ -1,6 +1,8 @@
 import axios from "axios";
 import styled from "styled-components";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
+import "react-tooltip/dist/react-tooltip.css";
+import { Tooltip } from "react-tooltip";
 import reactStringReplace from "react-string-replace";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useCallback } from "react";
@@ -17,6 +19,28 @@ function parseHashtags(caption) {
       </HashtagLink>
     );
   });
+}
+
+function getWhoLikedString(liked, likesCount, likedBy) {
+  if (likedBy === null && liked) return "Você";
+  if (likedBy === null && !liked) return "Ninguém";
+
+  const whoLiked = [];
+
+  if (liked) whoLiked.push("Você");
+
+  if (likedBy) {
+    for (const user of likedBy) {
+      if (whoLiked.length >= 2) break;
+      whoLiked.push(user.name);
+    }
+  }
+
+  if (whoLiked.length === likesCount) return whoLiked.join(" e ");
+
+  return `${whoLiked.join(", ")} e outras ${
+    likesCount - whoLiked.length
+  } pessoas`;
 }
 
 export default function PostCard({ post }) {
@@ -65,7 +89,15 @@ export default function PostCard({ post }) {
         <button onClick={handleLike}>
           {like ? <BsHeartFill className="liked" /> : <BsHeart />}
         </button>
-        <span>{`${likesCount} like${likesCount !== 1 ? "s" : ""}`}</span>
+        <span
+          data-tooltip-id="likes-tooltip"
+          data-tooltip-content={getWhoLikedString(
+            like,
+            likesCount,
+            post.likedBy
+          )}
+        >{`${likesCount} like${likesCount !== 1 ? "s" : ""}`}</span>
+        <Tooltip id="likes-tooltip" place="bottom" />
       </ProfileAndLikesContainer>
       <PostContent>
         <Link to={`/user/${post.author.id}`}>
@@ -127,6 +159,14 @@ const ProfileAndLikesContainer = styled.div`
     font-family: "Lato", sans-serif;
     font-size: 11px;
     color: white;
+  }
+
+  & #likes-tooltip {
+    font-family: "Lato", sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #505050;
   }
 `;
 
