@@ -100,7 +100,10 @@ export default function PostCard({ post }) {
         <Tooltip id="likes-tooltip" place="bottom" />
       </ProfileAndLikesContainer>
       <PostContent>
-        <Link to={`/user/${post.author.id}`}>
+        <Link to={{
+            pathname: `/user/${post.author.id}`,
+            state: { authorName: post.author.name, authorImage: post.author.pictureUrl },
+          }}>
           <h3>{post.author.name}</h3>
         </Link>
         <p>{parseHashtags(post.caption)}</p>

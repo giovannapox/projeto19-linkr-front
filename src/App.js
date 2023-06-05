@@ -4,6 +4,7 @@ import SignupPage from "./pages/SignupPage";
 import SigninPage from "./pages/SigninPage";
 import Timeline from "./pages/Timeline";
 import Hashtag from "./pages/Hashtag.js";
+import UserProfile from "./pages/UserProfile.js";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
             <Route path="/" element={<SigninPage />} />
             <Route path="/timeline" element={<Timeline />} />
             <Route path="/hashtag/:hashtag" element={<Hashtag />} />
+            <Route path="/user/:id" element={<UserProfile />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
