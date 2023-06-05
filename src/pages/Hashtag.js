@@ -16,7 +16,7 @@ export default function Hashtag() {
     if (!auth) navigate("/");
 
     axios
-      .get(`http://localhost:5000/posts?hashtag=${hashtag}`, {
+      .get(`${process.env.REACT_APP_BD}/posts?hashtag=${hashtag}`, {
         headers: { Authorization: `Bearer ${auth.token}` },
       })
       .then((res) => setPosts(res.data))

@@ -16,7 +16,7 @@ export default function Timeline() {
     if (!auth) return navigate("/");
 
     axios
-      .get(`http://localhost:5000/posts`, {
+      .get(`${process.env.REACT_APP_BD}/posts`, {
         headers: { Authorization: `Bearer ${auth.token}` },
       })
       .then((res) => setPosts(res.data))

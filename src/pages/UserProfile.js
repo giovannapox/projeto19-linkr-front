@@ -18,7 +18,7 @@ export default function UserProfile() {
         if (!auth) return navigate("/");
 
         axios
-        .get(`http://localhost:5000/user/${id}`, {
+        .get(`${process.env.REACT_APP_BD}/user/${id}`, {
             headers: { Authorization: `Bearer ${auth.token}` },
         })
         .then((res) => {

@@ -29,7 +29,7 @@ export default function SignupPage() {
         setDisabled(true);
         if(!user) return alert("Preencha todos os campos!");
 
-        const url = `http://localhost:5000/signin`;
+        const url = `${process.env.REACT_APP_BD}/signin`;
         const promise = axios.post(url, user);
         promise.then((res) => {
             localStorage.setItem("auth", JSON.stringify(res.data));
