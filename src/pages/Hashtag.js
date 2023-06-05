@@ -10,7 +10,7 @@ export default function Hashtag() {
   const navigate = useNavigate();
   const { hashtag } = useParams();
   const [posts, setPosts] = useState([]);
-  const { auth } = useAuth();
+  const { auth, setAuth } = useAuth();
 
   useEffect(() => {
     if (!auth) navigate("/");
@@ -23,6 +23,8 @@ export default function Hashtag() {
       .catch((err) => {
         console.error(err);
         if (err.response.status === 401) {
+          localStorage.clear();
+          setAuth(null);
           navigate("/");
         }
       });
