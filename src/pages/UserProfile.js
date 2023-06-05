@@ -23,7 +23,6 @@ export default function UserProfile() {
         })
         .then((res) => {
             setUserPosts(res.data.posts);
-            console.log(userPosts)
         })
         .catch((err) => {
             console.error(err);
