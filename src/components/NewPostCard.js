@@ -22,8 +22,8 @@ export default function NewPostCard({ setPosts }) {
       const headers = { Authorization: `Bearer ${auth.token}` };
 
       try {
-        await axios.post("http://localhost:5000/posts", body, { headers });
-        const { data } = await axios.get("http://localhost:5000/posts", {
+        await axios.post(`${process.env.REACT_APP_BD}/posts`, body, { headers });
+        const { data } = await axios.get(`${process.env.REACT_APP_BD}/posts`, {
           headers,
         });
         setPosts(data);
