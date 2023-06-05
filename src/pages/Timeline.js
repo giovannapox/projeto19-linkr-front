@@ -30,7 +30,7 @@ export default function Timeline() {
 
   return (
     <PostsPageLayout heading="timeline">
-      <NewPostCard />
+      <NewPostCard setPosts={setPosts} />
       {posts.length !== 0 ? (
         posts.map((post) => <PostCard key={post.id} post={post} />)
       ) : (

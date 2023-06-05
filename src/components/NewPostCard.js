@@ -1,28 +1,47 @@
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import useAuth from "../hooks/useAuth.js";
 
-export default function NewPostCard() {
+export default function NewPostCard({ setPosts }) {
+  const navigate = useNavigate();
+  const { auth, setAuth } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [url, setUrl] = useState("");
   const [caption, setCaption] = useState("");
 
   function handleSubmit(e) {
     e.preventDefault();
-    setIsLoading(true);
 
     const body = { url };
     if (caption.trim() !== "") body.caption = caption;
 
-    axios
-      .post("http://localhost:5000/posts", body)
-      .then((res) => {
-        // fetch posts again
-      })
-      .catch((err) => {
+    const createPost = async () => {
+      setIsLoading(true);
+      const headers = { Authorization: `Bearer ${auth.token}` };
+
+      try {
+        await axios.post("http://localhost:5000/posts", body, { headers });
+        const { data } = await axios.get("http://localhost:5000/posts", {
+          headers,
+        });
+        setPosts(data);
+        setUrl("");
+        setCaption("");
+      } catch (err) {
         console.error(err);
-      })
-      .finally(() => setIsLoading(false));
+        if (err.response.status === 401) {
+          localStorage.clear();
+          setAuth(null);
+          navigate("/");
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    createPost();
   }
 
   return (
