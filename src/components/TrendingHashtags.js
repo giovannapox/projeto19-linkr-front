@@ -8,7 +8,7 @@ export default function TrendingHashtags() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/hashtags/trending")
+      .get(`${process.env.REACT_APP_BD}/hashtags/trending`)
       .then((res) => setHashtags(res.data))
       .catch((err) => console.error(err));
   }, []);

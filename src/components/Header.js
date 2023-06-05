@@ -10,7 +10,7 @@ export default function Header() {
     const navigate = useNavigate();
 
     function showLogout() {
-        if(!arrow){
+        if (!arrow) {
             setArrow(true);
             setLogout("flex");
         } else {
@@ -19,28 +19,30 @@ export default function Header() {
         };
     };
 
-    function exit(){
+    function exit() {
         navigate("/");
         localStorage.removeItem("token");
         localStorage.removeItem("user");
     }
 
-	return (
-		<Container>
+    return (
+        <Container>
             <h1 onClick={() => navigate("/timeline")}>linkr</h1>
+
             <SearchBar />
+
             <IconImg onClick={showLogout}>
                 {arrow ?
-                    <BsChevronUp/>:
-                    <BsChevronDown/> 
+                    <BsChevronUp /> :
+                    <BsChevronDown />
                 }
                 <img src={localStorage.getItem("picture")} />
             </IconImg>
             <Logout logout={logout} onClick={exit}>
                 <h1>Logout</h1>
             </Logout>
-		</Container>
-	);
+        </Container>
+    );
 }
 
 const Container = styled.header`
@@ -58,6 +60,9 @@ const Container = styled.header`
         color: #FFFFFF;
         font-size: 49px;
         margin-left: 28px;
+    }
+    @media (min-width: 1300px) {
+      width: 100%;
     }
 `
 

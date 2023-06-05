@@ -16,7 +16,7 @@ export default function SearchBar() {
 
     try {
       const response = await axios.get(
-        `https://localhost:5000/user?search=${searchTerm}`
+        `${process.env.REACT_APP_BD}/user?search=${searchTerm}`
       );
       setSearchResults(response.data);
     } catch (error) {

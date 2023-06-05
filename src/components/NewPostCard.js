@@ -15,7 +15,7 @@ export default function NewPostCard() {
     if (caption.trim() !== "") body.caption = caption;
 
     axios
-      .post("http://localhost:5000/posts", body)
+      .post(`${process.env.REACT_APP_BD}/posts`, body)
       .then((res) => {
         // fetch posts again
       })

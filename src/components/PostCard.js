@@ -53,7 +53,7 @@ export default function PostCard({ post }) {
   const handleLike = useCallback(() => {
     setLikePending(true);
 
-    const url = `http://localhost:5000/posts/${post.id}/${
+    const url = `${process.env.REACT_APP_BD}/posts/${post.id}/${
       like ? "unlike" : "like"
     }`;
 

@@ -12,7 +12,7 @@ export default function SignupPage() {
         e.preventDefault();
         setDisabled(true);
         if(!user) return alert("Preencha todos os campos!");
-        const url = `http://localhost:5000/signup`;
+        const url = `${process.env.REACT_APP_BD}/signup`;
         const promise = axios.post(url, user);
         promise.then(() => {
             alert("Usuário cadastrado com sucesso!");
