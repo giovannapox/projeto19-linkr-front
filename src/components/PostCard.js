@@ -7,6 +7,7 @@ import reactStringReplace from "react-string-replace";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useCallback } from "react";
 import useAuth from "../hooks/useAuth.js";
+import MetaPlaceholderImage from "./MetaPlaceholderImage.js";
 
 function parseHashtags(caption) {
   const regex = /(?<=^|\s)(?:[#＃]([a-z0-9]+))(?=$|\s)/gi;
@@ -100,10 +101,15 @@ export default function PostCard({ post }) {
         <Tooltip id="likes-tooltip" place="bottom" />
       </ProfileAndLikesContainer>
       <PostContent>
-        <Link to={{
+        <Link
+          to={{
             pathname: `/user/${post.author.id}`,
-            state: { authorName: post.author.name, authorImage: post.author.pictureUrl },
-          }}>
+            state: {
+              authorName: post.author.name,
+              authorImage: post.author.pictureUrl,
+            },
+          }}
+        >
           <h3>{post.author.name}</h3>
         </Link>
         <p>{parseHashtags(post.caption)}</p>
@@ -113,7 +119,11 @@ export default function PostCard({ post }) {
             <p>{post.urlMeta?.description || "No description"}</p>
             <span>{post.urlMeta?.url}</span>
           </UrlMetadata>
-          <img src={post.urlMeta?.image} alt={post.urlMeta?.title} />
+          {post.urlMeta?.image ? (
+            <img src={post.urlMeta.image} alt={post.urlMeta.title} />
+          ) : (
+            <MetaPlaceholderImage />
+          )}
         </UrlMetadataContainer>
       </PostContent>
     </Container>
@@ -202,7 +212,7 @@ const UrlMetadataContainer = styled.a`
   border-radius: 11px;
   max-height: 155px;
 
-  & img {
+  & :is(img, svg) {
     width: 155px;
     height: 155px;
     object-fit: contain;
