@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useAuth from "../hooks/useAuth.js";
 import PostsPageLayout from "../components/PostsPageLayout.js";
 import PostCard from "../components/PostCard.js";
@@ -8,10 +8,8 @@ import PostLoader from "../components/PostLoader.js";
 
 export default function UserProfile() {
     const { id } = useParams();
-    const { auth } = useAuth();
     const navigate = useNavigate();
-    const location = useLocation();
-    const { authorName, authorImage } = location.state || {};
+    const { auth, setAuth } = useAuth();
     const [userPosts, setUserPosts] = useState([]);
 
     useEffect(() => {
@@ -19,30 +17,31 @@ export default function UserProfile() {
 
         const BASE_URL = process.env.REACT_APP_BD;
 
-        axios.get(`${BASE_URL}/user/${id}`, {
+        axios.get(`${BASE_URL}/posts?author=${id}`, {
             headers: { Authorization: `Bearer ${auth.token}` },
         })
         .then((res) => {
-            setUserPosts(res.data.posts);
+            setUserPosts(res.data);
         })
         .catch((err) => {
             console.error(err);
             if (err.response.status === 401) {
+                localStorage.clear();
+                setAuth(null);
                 navigate("/");
             }
         });
-    }, [id, auth, navigate, setUserPosts]);
-
+    }, [id, auth, setAuth, navigate, userPosts, setUserPosts]);
+    
     return (
-        <>
-            <img src={authorImage} alt={`${authorName}'s profile`} />
-            <PostsPageLayout heading={`${authorName}'s posts`} >
+        <PostsPageLayout 
+            heading={`${userPosts[0]?.author.name}'s posts`} 
+            profilePicture={userPosts[0]?.author.pictureUrl} >
             {userPosts.length !== 0 ? (
                 userPosts.map((post) => <PostCard key={post.id} post={post} />)
             ) : (
                 <PostLoader />
             )}
-            </PostsPageLayout>
-        </>
+        </PostsPageLayout>
     );
 }
