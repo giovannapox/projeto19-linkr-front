@@ -22,7 +22,7 @@ export default function SignupPage() {
             setAuth(JSON.parse(storedAuth));
             navigate("/timeline");
         }
-    }, [auth]);
+    }, [auth, setAuth, navigate]);
 
     function signin(e) {
         e.preventDefault();

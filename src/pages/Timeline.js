@@ -26,7 +26,7 @@ export default function Timeline() {
           navigate("/");
         }
       });
-  }, []);
+  }, [auth, navigate]);
 
   return (
     <PostsPageLayout heading="timeline">

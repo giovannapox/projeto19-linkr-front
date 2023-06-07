@@ -17,8 +17,9 @@ export default function UserProfile() {
     useEffect(() => {
         if (!auth) return navigate("/");
 
-        axios
-        .get(`${process.env.REACT_APP_BD}/user/${id}`, {
+        const BASE_URL = process.env.REACT_APP_BD;
+
+        axios.get(`${BASE_URL}/user/${id}`, {
             headers: { Authorization: `Bearer ${auth.token}` },
         })
         .then((res) => {
@@ -30,7 +31,7 @@ export default function UserProfile() {
                 navigate("/");
             }
         });
-    }, [id, auth, navigate]);
+    }, [id, auth, navigate, setUserPosts]);
 
     return (
         <>

@@ -28,7 +28,7 @@ export default function Hashtag() {
           navigate("/");
         }
       });
-  }, []);
+  }, [auth, setAuth, hashtag, navigate]);
 
   return (
     <PostsPageLayout heading={`#${hashtag}`}>

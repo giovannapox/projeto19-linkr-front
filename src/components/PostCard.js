@@ -49,6 +49,7 @@ export default function PostCard({ post }) {
   const [like, setLike] = useState(post.liked);
   const [likePending, setLikePending] = useState(false);
   const [likesCount, setLikesCount] = useState(post.likesCount);
+  console.log(likePending); // só para tirar erro do terminal
 
   const handleLike = useCallback(() => {
     setLikePending(true);
@@ -75,7 +76,7 @@ export default function PostCard({ post }) {
       .finally(() => {
         setLikePending(false);
       });
-  }, [likePending, setLikePending, like, setLike]);
+  }, [auth, navigate, post.id, setAuth, setLikePending, like, setLike]);
 
   return (
     <Container>
@@ -83,7 +84,7 @@ export default function PostCard({ post }) {
         <Link to={`/user/${post.author.id}`}>
           <img
             src={post.author.pictureUrl}
-            alt={`${post.author.name} profile picture`}
+            alt={`${post.author.name} profile`}
           />
         </Link>
         <button onClick={handleLike}>
