@@ -42,4 +42,10 @@ const Container = styled.main`
   display: flex;
   flex-direction: column;
   gap: 16px;
+
+  & > span.no-posts-msg {
+    font-family: "Lato", sans-serif;
+    color: white;
+    margin: auto;
+  }
 `;

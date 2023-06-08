@@ -10,6 +10,7 @@ export default function Hashtag() {
   const navigate = useNavigate();
   const { hashtag } = useParams();
   const [posts, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { auth, setAuth } = useAuth();
 
   useEffect(() => {
@@ -27,15 +28,18 @@ export default function Hashtag() {
           setAuth(null);
           navigate("/");
         }
-      });
+      })
+      .finally(() => setIsLoading(false));
   }, []);
 
   return (
     <PostsPageLayout heading={`#${hashtag}`}>
-      {posts.length !== 0 ? (
+      {isLoading ? (
+        <PostLoader />
+      ) : posts.length !== 0 ? (
         posts.map((post) => <PostCard key={post.id} post={post} />)
       ) : (
-        <PostLoader />
+        <span className="no-posts-msg">No posts yet</span>
       )}
     </PostsPageLayout>
   );

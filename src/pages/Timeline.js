@@ -11,6 +11,7 @@ export default function Timeline() {
   const { auth } = useAuth();
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (!auth) return navigate("/");
@@ -25,16 +26,19 @@ export default function Timeline() {
         if (err.response.status === 401) {
           navigate("/");
         }
-      });
+      })
+      .finally(() => setIsLoading(false));
   }, []);
 
   return (
     <PostsPageLayout heading="timeline">
       <NewPostCard setPosts={setPosts} />
-      {posts.length !== 0 ? (
+      {isLoading ? (
+        <PostLoader />
+      ) : posts.length !== 0 ? (
         posts.map((post) => <PostCard key={post.id} post={post} />)
       ) : (
-        <PostLoader />
+        <span className="no-posts-msg">No posts yet</span>
       )}
     </PostsPageLayout>
   );
