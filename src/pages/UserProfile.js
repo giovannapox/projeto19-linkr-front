@@ -37,10 +37,10 @@ export default function UserProfile() {
         <PostsPageLayout 
             heading={`${userPosts[0]?.author.name}'s posts`} 
             profilePicture={userPosts[0]?.author.pictureUrl} >
-            {userPosts.length !== 0 ? (
+            {userPosts.length > 0 ? (
                 userPosts.map((post) => <PostCard key={post.id} post={post} />)
             ) : (
-                <PostLoader />
+                <p>Não há posts para esse usuário</p>
             )}
         </PostsPageLayout>
     );
