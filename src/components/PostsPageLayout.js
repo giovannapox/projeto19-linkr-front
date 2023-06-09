@@ -8,17 +8,16 @@ export default function PostsPageLayout({ children, heading, profilePicture }) {
       <Header />
       <PageContainer>
         <PageHeading>
-          {
-            heading !== "timeline" ? 
-              <><img 
-                src={profilePicture} 
-                alt={heading} 
-              />
-              <h2>{heading}</h2></>
-              : <h2>{heading}</h2>
-          }
+          {heading !== "timeline" ? (
+            <>
+              <img src={profilePicture} alt={heading} />
+              <h2>{heading}</h2>
+            </>
+          ) : (
+            <h2>{heading}</h2>
+          )}
         </PageHeading>
-        
+
         <PageContent>
           <Container>{children}</Container>
           <div>
@@ -52,7 +51,7 @@ const PageHeading = styled.div`
     font-size: 43px;
     font-weight: 700;
   }
-`
+`;
 
 const PageContent = styled.div`
   display: flex;
@@ -66,7 +65,7 @@ const Container = styled.main`
   flex-direction: column;
   gap: 16px;
 
-  & > span.no-posts-msg {
+  & > :is(span.no-posts-msg, #sentinel) {
     font-family: "Lato", sans-serif;
     color: white;
     margin: auto;
