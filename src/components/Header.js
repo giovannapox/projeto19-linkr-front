@@ -34,7 +34,7 @@ export default function Header() {
                     <BsChevronUp/>:
                     <BsChevronDown/> 
                 }
-                <img src={localStorage.getItem("picture")} />
+                <img src={localStorage.getItem("picture")} alt="signout" />
             </IconImg>
             <Logout logout={logout} onClick={exit}>
                 <h1>Logout</h1>

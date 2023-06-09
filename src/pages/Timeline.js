@@ -28,7 +28,7 @@ export default function Timeline() {
         }
       })
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [auth, navigate]);
 
   return (
     <PostsPageLayout heading="timeline">

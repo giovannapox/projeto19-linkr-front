@@ -13,7 +13,7 @@ function parseHashtags(caption) {
   const regex = /(?<=^|\s)(?:[#＃]([a-z0-9]+))(?=$|\s)/gi;
 
   return reactStringReplace(caption, regex, (match, index) => {
-    console.log(match);
+    // console.log(match);
     return (
       <HashtagLink to={`/hashtag/${match}`} key={index}>
         {`#${match}`}
@@ -57,13 +57,13 @@ export default function PostCard({ post }) {
     const url = `${process.env.REACT_APP_BD}/posts/${post.id}/${
       like ? "unlike" : "like"
     }`;
-
+    
     axios
       .post(url, {}, { headers: { authorization: `Bearer ${auth.token}` } })
       .then((res) => {
         setLike(!like);
-        console.log(res.data);
         setLikesCount(res.data.likesCount);
+        console.log(likePending);
       })
       .catch((err) => {
         console.error(err);
@@ -76,17 +76,15 @@ export default function PostCard({ post }) {
       .finally(() => {
         setLikePending(false);
       });
-  }, [likePending, setLikePending, like, setLike]);
+  }, [auth, navigate, post.id, setAuth, likePending, setLikePending, like, setLike]);
 
   return (
     <Container>
       <ProfileAndLikesContainer>
-        <Link to={`/user/${post.author.id}`}>
-          <img
-            src={post.author.pictureUrl}
-            alt={`${post.author.name} profile picture`}
-          />
-        </Link>
+        <img
+          src={post.author.pictureUrl}
+          alt={`${post.author.name} profile`}
+        />
         <button onClick={handleLike}>
           {like ? <BsHeartFill className="liked" /> : <BsHeart />}
         </button>
@@ -101,15 +99,7 @@ export default function PostCard({ post }) {
         <Tooltip id="likes-tooltip" place="bottom" />
       </ProfileAndLikesContainer>
       <PostContent>
-        <Link
-          to={{
-            pathname: `/user/${post.author.id}`,
-            state: {
-              authorName: post.author.name,
-              authorImage: post.author.pictureUrl,
-            },
-          }}
-        >
+        <Link to={`/user/${post.author.id}`}>
           <h3>{post.author.name}</h3>
         </Link>
         <p>{parseHashtags(post.caption)}</p>
